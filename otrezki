@@ -1,0 +1,73 @@
+<html>
+<body>
+<table>
+<tr><td><canvas id='lab04' height='500' width='500' style='border:1px solid;'></td>
+</tr>
+</table>
+<script>
+   
+   let x1;
+   let y1;
+   let x2;
+   let y2;
+   let flag1=0;
+   let canvas = document.getElementById('lab04');
+   let ctx = canvas.getContext('2d');
+    function onClick(event)
+   {
+    if (flag1 == 0)
+    {
+      
+      x1 = event.offsetX;
+      y1 = event.offsetY;
+      flag1 = 1;
+      return; 
+    }
+    if (flag1 == 1)
+    {
+      
+      x2 = event.offsetX;
+      y2 = event.offsetY;
+      flag2 = 1 ;
+      Drawline(x1,y1,x2,y2);
+      flag1 = 0;
+      return;
+    }
+   }
+   canvas.addEventListener("click", onClick);
+   
+  
+  
+   
+   function Drawline(x1,y1,x2,y2)
+   {
+    var deltaX = Math.abs(x2 - x1);
+    var deltaY = Math.abs(y2 - y1);
+    var signX = x1 < x2 ? 1 : -1;
+    var signY = y1 < y2 ? 1 : -1;
+    //
+    var error = deltaX - deltaY;
+    //
+    ctx.fillRect(x2,y2,1,1);
+    while((x1 != x2) || (y1 != y2)) 
+   {
+        
+        ctx.fillRect(x1,y1,1,1);
+        var error2 = error * 2;
+        //
+        if(error2 > -deltaY) 
+        {
+            error -= deltaY;
+            x1 += signX;
+        }
+        if(error2 < deltaX) 
+        {
+            error += deltaX;
+            y1 += signY;
+        }
+       
+    }
+   }
+</script>
+</body>
+</html>
